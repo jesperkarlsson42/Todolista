@@ -51,4 +51,23 @@ mongoose.connect(process.env.DB_CONNECT,
 app.get('/delete/:id', async (req, res) => {
     await Todo.deleteOne({_id:req.params.id});
     res.redirect("/");
+});
+
+app.get('/edit/:id', async (req, res) => {
+    const id = req.params.id
+    await Todos.find({}, (err, data) => {
+        res.render("todos.ejs", {todos: data, taskId: id});
+    }) 
+})
+
+app.post('/edit/:id', async (req, res) => {
+    const id = req.params.id
+    await Todo.findByIdAndUpdate(id,{task: req.body.task}, (err) => {
+        if (err) {
+            console.log("Error Edit task");
+            res.send(500, err);
+            return
+        }
+        res.redirect("/");
+    })
 })
