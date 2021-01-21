@@ -31,3 +31,19 @@ app.post('/', async (req, res) => {
     }
 
 })
+
+const options = { useNewUrlParser: true, useUnifiedTopology: true }
+
+mongoose.connect(process.env.DB_CONNECT,
+    options,
+    (err) => {
+      console.log(err);
+  
+      if (err) return;
+      console.log("connected to db!");
+  
+      app.listen(8000, (err) => {
+        console.log("application is running on port 8000");
+      });
+    }
+  );
