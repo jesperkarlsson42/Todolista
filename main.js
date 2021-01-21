@@ -1,20 +1,19 @@
 const express = require('express');
-const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-
-const todo = require('./model/todo');
+const Todo = require('./model/todo');
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/static", express.static(__dirname + "/public"));
+
 
 app.set('view engine', 'ejs');
 
 app.get('/', async (req, res) => {
 
-    const data = await todo.find();
+    const data = await Todo.find();
     res.render("todos.ejs", {todos: data});
 });
 
@@ -47,3 +46,9 @@ mongoose.connect(process.env.DB_CONNECT,
       });
     }
   );
+
+  
+app.get('/delete/:id', async (req, res) => {
+    await Todo.deleteOne({_id:req.params.id});
+    res.redirect("/");
+})
