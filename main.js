@@ -13,12 +13,21 @@ app.set('view engine', 'ejs');
 
 app.get('/', async (req, res) => {
 
-    const data = await Todo.find();
-    res.render("todos.ejs", {todos: data});
+    try {
+        const {page = 1, limit = 10} = req.query;
+        const data = await Todo.find().limit(limit * 1).skip((page - 1) * limit);
+        res.render("todos.ejs", {todos: data});
+    }
+    catch (err) {
+        console.error(err);
+    }
+    
 });
 
+
+
 app.post('/', async (req, res) => {
-    const newTask = new todo ({
+    const newTask = new Todo ({
         task: req.body.task
     });
     try {
@@ -36,10 +45,11 @@ const options = { useNewUrlParser: true, useUnifiedTopology: true }
 mongoose.connect(process.env.DB_CONNECT,
     options,
     (err) => {
-      console.log(err);
   
-      if (err) return;
-      console.log("connected to db!");
+      if (err !== null) {
+        console.log("error connecting to DB"); 
+        return
+      }
   
       app.listen(8000, (err) => {
         console.log("application is running on port 8000");
@@ -48,15 +58,18 @@ mongoose.connect(process.env.DB_CONNECT,
   );
 
   
+  
 app.get('/delete/:id', async (req, res) => {
     await Todo.deleteOne({_id:req.params.id});
     res.redirect("/");
 });
 
+
+
 app.get('/edit/:id', async (req, res) => {
     const id = req.params.id
-    await Todos.find({}, (err, data) => {
-        res.render("todos.ejs", {todos: data, taskId: id});
+    await Todo.find({}, (err, data) => {
+        res.render("editTask.ejs", {todos: data, taskId: id});
     }) 
 })
 
@@ -67,7 +80,11 @@ app.post('/edit/:id', async (req, res) => {
             console.log("Error Edit task");
             res.send(500, err);
             return
-        }
-        res.redirect("/");
+           
+        } else {
+            res.redirect("/");
+        } 
+         
     })
 })
+
