@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 app.get('/', async (req, res) => {
 
     try {
-        const {page = 1, limit = 10} = req.query;
+        const {page = 1, limit = 20} = req.query;
         const data = await Todo.find().limit(limit * 1).skip((page - 1) * limit);
         res.render("todos.ejs", {todos: data});
     }

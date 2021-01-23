@@ -10,7 +10,7 @@ body {
 }
 
 .todo-container {
-    box-shadow: rgba(1, 5, 5, 0.4) 5px 5px;
+    box-shadow: rgba(1, 5, 5, 0.5) 5px 5px;
     padding: 5px;
     border-radius: 10px;
     position: absolute;
@@ -18,11 +18,20 @@ body {
     top: 20%;
     background: white;
     width: 400px;
-    height: 500px;
+    min-height: 250px;
 }
 
 .container {
     text-align: center;
     position: absolute;
     left: 35%;
+    top: 5%;
     width: 400px;
+}
+
+.task-div {
+    width: 350px;
+    text-align: center;
+    margin: 5px 0; 
+}
+
