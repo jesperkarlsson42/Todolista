@@ -6,7 +6,7 @@ body {
     background-image: cover;
     background-image: url(./images/bckg.jpg);
     background-color: red;
-    background-blend-mode: darken;
+    background-blend-mode: multiply;
 }
 
 .todo-container {
