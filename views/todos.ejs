@@ -25,6 +25,8 @@
 
 
     <div class="todo-container">
+        <a href="/?page=<%=(dataToShow/dataPerPage)%>&&sorted=-1"><i class="fas fa-clock"></i><i class="fas fa-sort-down"></i></a>
+        <a href="/?page=<%=(dataToShow/dataPerPage)%>&&sorted=+1"><i class="fas fa-clock"></i><i class="fas fa-sort-up"></i></a>
     <% for(let i=0; i<todos.length; i++) { %>
         <% let a = todos[i].date; %>
         <% let dd = a.getDate(); %>

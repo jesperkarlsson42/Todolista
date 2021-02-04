@@ -11,37 +11,46 @@ app.use("/static", express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
-
-  const sorted = + req.query.sorted || 1;
-  const page = + req.query.page || 1;
+  const sorted = +req.query.sorted || 1;
+  const page = +req.query.page || 1;
   const totalData = await Todo.find().countDocuments();
-  let a = totalData/10;
+  let a = totalData / 10;
   let x = Math.ceil(a);
 
   if (x < page) {
     res.redirect("/?page=1");
-
   } else {
     try {
-    
-    let dataPerPage = 10;
-    const totalDataPart = Math.ceil(totalData/dataPerPage);
-    dataToShow = dataPerPage * page;
-    if (page === 1) {
-      const data = await Todo.find().limit(10);
-      res.render("todos.ejs", { todos: data, totalData, dataPerPage, totalDataPart, dataToShow});
-    } else {
-      const data = await Todo.find().limit(10).skip((page - 1) * 10);
-      res.render("todos.ejs", { todos: data, totalData, dataPerPage, totalDataPart, dataToShow});
+      let dataPerPage = 10;
+      const totalDataPart = Math.ceil(totalData / dataPerPage);
+      dataToShow = dataPerPage * page;
+      if (page === 1) {
+        const data = await Todo.find().limit(10).sort({ date: sorted });
+        res.render("todos.ejs", {
+          todos: data,
+          totalData,
+          dataPerPage,
+          totalDataPart,
+          dataToShow,
+        });
+      } else {
+        const data = await Todo.find()
+          .limit(10)
+          .sort({ date: sorted })
+          .skip((page - 1) * 10);
+        res.render("todos.ejs", {
+          todos: data,
+          totalData,
+          dataPerPage,
+          totalDataPart,
+          dataToShow,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-    
-  } catch (err) {
-    console.log(err);
   }
-  }
-  
 });
-
 
 app.post("/", async (req, res) => {
   const newTask = new Todo({
