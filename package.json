@@ -6,15 +6,16 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.13",
+    "mongoose": "^5.11.13"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.7"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "nodemon main.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-date": "nodemon date.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

@@ -5,15 +5,16 @@ body {
     background-image: contain;
     background-image: cover;
     background-image: url(./images/bckg.jpg);
-    background-color: red;
-    background-blend-mode: multiply;
+    background-color:blue;
+    background-blend-mode:difference;
 }
 
 .todo-container {
     box-shadow: rgba(1, 5, 5, 0.5) 5px 5px;
     padding: 5px;
+    margin: 200px 0;
     border-radius: 10px;
-    position: absolute;
+    position: relative;
     left: 35%;
     top: 20%;
     background: white;
@@ -32,6 +33,25 @@ body {
 .task-div {
     width: 350px;
     text-align: center;
+    height: 25px;
     margin: 5px 0; 
 }
 
+.btn-div {
+    text-align: center;
+}
+
+#date {
+    position: absolute;
+    right: 50px;
+}
+
+.btn-edit {
+    position: absolute;
+    right: 10px;
+}
+
+.btn-delete {
+    position: absolute;
+    right: 30px;
+}
