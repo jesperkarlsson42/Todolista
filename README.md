@@ -1,2 +1,2 @@
 
-In terminal use: npm i express mongoose dotenv body-parser nodemon
+In terminal use: npm i

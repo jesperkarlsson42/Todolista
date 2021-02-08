@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <h1>ToDos</h1>
+        <form action="/" method="post">
+        <input type="text" name="task">
+        <button type="submit">Add</button>
+        </form>
+    </div>
+
+    <div class="todo-container">
+        <% for (let i = 0; i <todos.length; i++) { %>
+            <%    if (todos[i]._id == taskId) { %>
+                <form action="/edit/<%=todos[i]._id%>" method="post" class="task-form">
+                <input type="text" name="task" value="<%=todos[i].task%>" class="task-input" required minlength="1" maxlength="30">
+                <button type="submit" id="submit">Submit</button>
+                <a href="/?page=<%= page %>&&sorted=<%= sorted %>">Cancel</a>
+                </form>
+            <% } else { %>
+                <% let dateToString = todos[i].date.toString().split(' ').splice(0, 5); %>
+                    <div class="task-div">    
+                        <span  class="todos"><%= todos[i].task %></span>
+                        <span class="todos"><%= dateToString %></span>
+                        <a href="/edit/<%= todos[i]._id%>"><i class="far fa-edit"></i></a>
+                        <a href="/delete/<%= todos[i]._id%>"><i class="fas fa-trash"></i></a>
+                    </div>
+                <% } %>
+        <% } %>
+    </div>
+
+    
+</body>
+</html>

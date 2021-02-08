@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO APP</title>
+    <script src="main.js"></script>
+    <script src="views/todos.js"></script>
+    <script src="./model/pagination.js"></script>
+    <link rel="stylesheet" href="/static/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+<body>
+    
+
+    
+
+    <div class="container">
+        <h1>ToDos</h1>
+        <form action="/" method="post">
+        <input type="text" name="task">
+        <button type="submit"><i class="fas fa-plus"></i></button>
+        </form>
+    </div>
+
+    <p class="sort">Sort</p>
+    <div class="todo-container">
+        <a href="/?page=<%=(dataToShow/dataPerPage)%>&&sorted=-1"><i class="fas fa-clock"></i><i class="fas fa-sort-down"></i></a>
+        <a href="/?page=<%=(dataToShow/dataPerPage)%>&&sorted=+1"><i class="fas fa-clock"></i><i class="fas fa-sort-up"></i></a>
+    <% for(let i=0; i<todos.length; i++) { %>
+        <% let a = todos[i].date; %>
+        <% let dd = a.getDate(); %>
+        <% if (dd < 10) { %>
+        <%dd = "0"+dd; %>
+        <% } %>
+        <% let mm = a.getMonth() + 1; %>
+        <% if (mm < 10) { %>
+        <% mm = "0"+mm; %>
+        <%} %>
+        <% let y = a.getFullYear(); %>
+        <% let z = y.toString(); %>
+        <% let yy = z.slice(2, 4); %>
+        <% let date = dd + '/' + mm + '/' + yy; %>
+        
+        <div class="task-div">    
+            <span  class="todos"><%= todos[i].task %></span>
+            <span class="todos" id="date"><%= date %></span>
+            <a class="btn-edit" href="/edit/<%= todos[i]._id%>?page=<%= page %>&&sorted=<%= sorted %>"><i class="far fa-edit"></i></a>
+            <a class="btn-delete" href="/delete/<%= todos[i]._id%>"><i class="fas fa-trash"></i></a>
+        </div>
+        
+ 
+    <% } %>
+        <div class="btn-div">
+            <a href="/?page=<%=(dataToShow/dataPerPage) -1%>"> 
+                <i class="fas fa-arrow-left"></i>Back
+              </a>
+
+              <a href="/?page=<%=(dataToShow/dataPerPage) +1%>"> 
+                Next<i class="fas fa-arrow-right"></i>
+              </a>
+        </div>
+
+    </div>
+</body>
+</html>
