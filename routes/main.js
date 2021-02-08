@@ -1,16 +1,8 @@
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-require("dotenv").config();
-const Todo = require("./model/todo");
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/static", express.static(__dirname + "/public"));
+const router = express.Router();
+const Todo = require("../model/todo");
 
-app.set("view engine", "ejs");
-
-app.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const sorted = +req.query.sorted || 1;
   const page = +req.query.page || 1;
   const totalData = await Todo.find().countDocuments();
@@ -33,7 +25,7 @@ app.get("/", async (req, res) => {
           totalDataPart,
           dataToShow,
           page,
-          sorted
+          sorted,
         });
       } else {
         const data = await Todo.find()
@@ -47,7 +39,7 @@ app.get("/", async (req, res) => {
           totalDataPart,
           dataToShow,
           page,
-          sorted
+          sorted,
         });
       }
     } catch (err) {
@@ -56,7 +48,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   const newTask = new Todo({
     task: req.body.task,
   });
@@ -68,25 +60,12 @@ app.post("/", async (req, res) => {
   }
 });
 
-const options = { useNewUrlParser: true, useUnifiedTopology: true };
-
-mongoose.connect(process.env.DB_CONNECT, options, (err) => {
-  if (err !== null) {
-    console.log("error connecting to DB");
-    return;
-  }
-
-  app.listen(8000, (err) => {
-    console.log("application is running on port 8000");
-  });
-});
-
-app.get("/delete/:id", async (req, res) => {
+router.get("/delete/:id", async (req, res) => {
   await Todo.deleteOne({ _id: req.params.id });
   res.redirect("/");
 });
 
-app.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", async (req, res) => {
   const sorted = +req.query.sorted || 1;
   const page = +req.query.page || 1;
   const totalData = await Todo.find().countDocuments();
@@ -113,7 +92,7 @@ app.get("/edit/:id", async (req, res) => {
               totalDataPart,
               dataToShow,
               taskId: id,
-              sorted
+              sorted,
             });
           });
       } else {
@@ -130,7 +109,7 @@ app.get("/edit/:id", async (req, res) => {
               totalDataPart,
               dataToShow,
               taskId: id,
-              sorted
+              sorted,
             });
           });
       }
@@ -140,9 +119,7 @@ app.get("/edit/:id", async (req, res) => {
   }
 });
 
-
-
-app.post("/edit/:id", async (req, res,) => {
+router.post("/edit/:id", async (req, res) => {
   const id = req.params.id;
   const sorted = +req.query.sorted || 1;
   let page = +req.query.page || 1;
@@ -156,3 +133,5 @@ app.post("/edit/:id", async (req, res,) => {
     }
   });
 });
+
+module.exports = router;
