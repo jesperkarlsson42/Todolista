@@ -22,6 +22,9 @@ body {
     min-height: 250px;
 }
 
+h1 {
+    color: white;
+}
 .container {
     text-align: center;
     position: absolute;
@@ -56,4 +59,13 @@ body {
     position: absolute;
     right: 30px;
     color: red;
+}
+
+.sort {
+    color: white;
+    position: absolute;
+    left: 36%;
+    top: 16%;
+    font-weight: bold;
+    font-size: 20px;
 }
