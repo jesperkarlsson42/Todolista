@@ -49,9 +49,11 @@ body {
 .btn-edit {
     position: absolute;
     right: 10px;
+    color: green;
 }
 
 .btn-delete {
     position: absolute;
     right: 30px;
+    color: red;
 }

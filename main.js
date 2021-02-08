@@ -142,7 +142,7 @@ app.get("/edit/:id", async (req, res) => {
 
 
 
-app.post("/edit/:id", async (req, res) => {
+app.post("/edit/:id", async (req, res,) => {
   const id = req.params.id;
   const sorted = +req.query.sorted || 1;
   let page = +req.query.page || 1;
@@ -152,7 +152,7 @@ app.post("/edit/:id", async (req, res) => {
       res.send(500, err);
       return;
     } else {
-      res.redirect("/?page=" + page + "&&sorted" + sorted);
+      res.redirect("/");
     }
   });
 });
