@@ -45,7 +45,7 @@
         <div class="task-div">    
             <span  class="todos"><%= todos[i].task %></span>
             <span class="todos" id="date"><%= date %></span>
-            <a class="btn-edit" href="/edit/<%= todos[i]._id%>"><i class="far fa-edit"></i></a>
+            <a class="btn-edit" href="/edit/<%= todos[i]._id%>?page=<%= page %>&&sorted=<%= sorted %>"><i class="far fa-edit"></i></a>
             <a class="btn-delete" href="/delete/<%= todos[i]._id%>"><i class="fas fa-trash"></i></a>
         </div>
         
